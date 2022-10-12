@@ -7,7 +7,7 @@ exports.addIntervention = (req, res, next) => {
     });
 
     intervention.save()
-        .then( () => res.status(201).json({ message : "Intervention créés dans la base MongoDB"})) 
+        .then( () => res.status(201).json({ success : "Intervention créés dans la base MongoDB"})) 
         .catch( error => res.status(400).json({ error }));
 };
 
@@ -25,6 +25,6 @@ exports.getAllInterventions = (req, res, next) => {
 
 exports.deleteAgentIntervention = (req, res, next) => {
     Intervention.deleteOne({_id: req.params.id, numAgent: req.auth.numAgent})
-        .then( intervention => res.status(200).json({message: 'Intervention supprimés'}))
+        .then( intervention => res.status(200).json({success: 'Intervention supprimés'}))
         .catch(error => res.status(400).json({ error })); 
 };

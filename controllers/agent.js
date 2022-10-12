@@ -1,6 +1,5 @@
 const Agent = require("../models/Agent");
 const bcrypt = require("bcrypt");
-//const event = require('../events/sendMail');
 const jwt = require("jsonwebtoken");
 
 exports.login = (req, res, next) => {
@@ -40,8 +39,7 @@ exports.registerAgent = (req, res, next) => {
         //SAUVEGARDE EN BD
         agent.save()
             .then( () => {
-                //event.emit('sendMail', {email: user.email});
-                res.status(201).json({message: 'Utilisateur créé'})
+                res.status(201).json({numAgent: agent.numAgent})
             })
             .catch(error => res.status(400).json({ error }));
     })
@@ -56,7 +54,7 @@ exports.updateAgent = (req, res, next) => {
         }
 
         Agent.updateOne({numAgent: req.auth.numAgent}, {grade: req.body.grade})
-            .then( user => res.status(200).json(user))
+            .then( user => res.status(200).json({success: 'Update ok !'}))
             .catch(error => res.status(400).json({ error }));
     })
     .catch(error => res.status(400).json({ error }));
