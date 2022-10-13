@@ -55,7 +55,7 @@ exports.updateAgent = (req, res, next) => {
 
         Agent.updateOne({numAgent: req.auth.numAgent}, {grade: req.body.grade})
             .then( user => res.status(200).json({success: 'Update ok !'}))
-            .catch(error => res.status(400).json({ error }));
+            .catch(error => res.status(401).json({ error }));
     })
     .catch(error => res.status(400).json({ error }));
 };

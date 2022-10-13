@@ -2,8 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const agentRoutes = require("./routes/agent");
 const interventionRoutes = require("./routes/intervention");
+const listintervRoutes = require("./routes/listinterv");
 const app = express();
 app.use(express.json());
+app.set('view engine', 'ejs');
 
 mongoose.connect('mongodb+srv://etienne:mjj2329@cluster0.lpwipzk.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
@@ -30,5 +32,6 @@ app.use((req, res, next) => {
 
 app.use('/api/agent', agentRoutes);
 app.use('/api/intervention', interventionRoutes);
+app.use('/listinterv', listintervRoutes);
 
 module.exports = app;

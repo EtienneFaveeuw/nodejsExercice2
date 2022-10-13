@@ -1,13 +1,29 @@
 const Intervention = require("../models/Intervention");
 
 exports.addIntervention = (req, res, next) => {
-    req.body.numAgent = req.auth.numAgent;
-    const intervention = new Intervention({
-        ...req.body
+    const interventionObject = req.file ? new Intervention({
+        ...JSON.parse(req.body.intervention),
+        numAgent: req.auth.numAgent,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }) : new Intervention({
+        ...req.body,
+        numAgent: req.auth.numAgent,
     });
 
-    intervention.save()
-        .then( () => res.status(201).json({ success : "Intervention créés dans la base MongoDB"})) 
+    /*const interventionObject = JSON.parse(req.body.intervention);
+    const intervention = new Intervention({
+        ...interventionObject,
+        numAgent: req.auth.numAgent,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    });*/
+
+    /*const intervention = new Intervention({
+        ...req.body,
+        numAgent: req.auth.numAgent
+    });*/
+
+    interventionObject.save()
+        .then( () => res.status(201).json({ success : "Intervention créée dans la base MongoDB"})) 
         .catch( error => res.status(400).json({ error }));
 };
 
@@ -25,6 +41,6 @@ exports.getAllInterventions = (req, res, next) => {
 
 exports.deleteAgentIntervention = (req, res, next) => {
     Intervention.deleteOne({_id: req.params.id, numAgent: req.auth.numAgent})
-        .then( intervention => res.status(200).json({success: 'Intervention supprimés'}))
+        .then( intervention => res.status(200).json({success: 'Intervention supprimée'}))
         .catch(error => res.status(400).json({ error })); 
 };

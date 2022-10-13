@@ -12,7 +12,7 @@ routeur.post("/register", agentCtrl.registerAgent);
 routeur.post("/login", agentCtrl.login);
 
 //POST
-/*Mettre à jour un agent*/
+/*Mettre à jour un agent(grade)*/
 routeur.post("/update", auth, agentCtrl.updateAgent)
 
 module.exports = routeur;

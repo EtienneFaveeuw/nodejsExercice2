@@ -2,10 +2,11 @@ const express = require('express');
 const routeur = express.Router();
 const interventionCtrl = require('../controllers/intervention');
 const auth = require('../middleware/auth');
+const multer = require('../middleware/multer-config');
 
 //POST
 /*Enregistrer une intervention*/
-routeur.post("/", auth, interventionCtrl.addIntervention);
+routeur.post("/", auth, multer, interventionCtrl.addIntervention);
 
 //GET
 /*Récupérer les interventions d'un agent*/
